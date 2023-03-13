@@ -1,10 +1,16 @@
 import './App.scss'
+import { Route, Routes } from 'react-router-dom'
+import { NavBar } from './components/layout'
+import { Index } from './views/Index'
 
 function App() {
   return (
-    <div className="App">
-      
-    </div>
+    <>
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Index />} />
+      </Routes>   
+    </> 
   )
 }
 
