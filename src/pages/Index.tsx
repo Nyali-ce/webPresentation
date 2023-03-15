@@ -1,9 +1,9 @@
 function Index() {
     return (
         <div>
-            <h1>Index</h1>
+            <h1>Index page</h1>
         </div>
     )
 }
 
-export { Index }
+export default Index

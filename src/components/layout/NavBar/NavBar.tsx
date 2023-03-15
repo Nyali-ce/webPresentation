@@ -3,10 +3,16 @@ import { Link } from 'react-router-dom'
 
 function NavBar() {
   return (
-    <nav className="navBar">
-        <Link to="/">Home</Link>
-        <Link to="/about">About</Link>
-    </nav>
+    <>
+      <div className='logo'>
+        <img src='img/logo.png' alt='Nyali Logo' />
+        <h1>Nyali</h1>
+      </div>
+      <nav className='navBar'>
+        <Link className='navBar-item' to='/'>Home</Link>
+        <Link className='navBar-item' to='/about'>About</Link>
+      </nav>
+    </>
   )
 }
 

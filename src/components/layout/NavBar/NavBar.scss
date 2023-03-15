@@ -1,3 +1,26 @@
-nav.navBar {
-    background-color: aquamarine;
+.navBar {
+    width:100%;
+    height: 50px;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    background-color: #914141;
+    color: rgba(255, 255, 255, 0.87);
+}
+
+.navBar-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 32px;
+    height: 32px;
+}
+
+.navBar-item {
+    // right
+    margin-left: auto;
+
 }
