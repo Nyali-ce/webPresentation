@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 function NavBar() {
   return (
     <>
-      <div className='logo'>
-        <img src='img/logo.png' alt='Nyali Logo' />
-        <h1>Nyali</h1>
+      <div className='logo-container'>
+        <img className='logo' src='img/logo.png' alt='Nyali Logo' />
+        <h1 className='logo-text'>Nyali</h1>
       </div>
       <nav className='navBar'>
         <Link className='navBar-item' to='/'>Home</Link>
