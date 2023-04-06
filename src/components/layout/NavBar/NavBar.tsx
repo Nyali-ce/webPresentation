@@ -5,7 +5,7 @@ function NavBar() {
   return (
     <>
       <div className='logo-container'>
-        <h1 className='logo-text'>Nyali.ce</h1>
+        <Link className='logo-text' to='/'>Nyali.ce</Link>
       </div>
       <nav className='navBar'>
         <Link className='navBar-item' to='/'>Home</Link>
