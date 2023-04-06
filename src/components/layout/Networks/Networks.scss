@@ -5,13 +5,11 @@
     display: flex;
     margin: 16px 0;
     justify-content: center;
-    // min right position 0
     right: 0;    
     background-color: #242424;
 
 
     @media (min-aspect-ratio: 1/1) {
-        // prevent 
         justify-content: flex-end;
         margin-right: 32px;
     }
