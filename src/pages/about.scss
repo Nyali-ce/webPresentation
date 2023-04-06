@@ -1,0 +1,35 @@
+.aboutSection {
+    padding-top: 60px;
+    // center the content
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    // align self to the center of the page
+    margin: auto;
+    // set the width of the content
+    width: 70%;
+}
+
+.aboutTitle {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 16px;
+    color: #cacaca;
+}
+
+.aboutDescription {
+    font-size: 1.2rem;
+    font-weight: 300;
+    line-height: 1.5;
+    margin: 0;
+    margin-bottom: 16px;
+    color: #cacaca;
+    min-width: 400px;
+    max-width: 700px;
+    max-height: fit-content;
+    text-align: justify;
+    
+}

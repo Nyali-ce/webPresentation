@@ -1,0 +1,30 @@
+.networks {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    display: flex;
+    margin: 16px 0;
+    justify-content: center;
+    // min right position 0
+    right: 0;    
+    background-color: #242424;
+
+
+    @media (min-aspect-ratio: 1/1) {
+        // prevent 
+        justify-content: flex-end;
+        margin-right: 32px;
+    }
+}
+
+.networksLink {
+    margin: 0 16px;
+}
+
+.networksLink a {
+    color: #cacaca;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    font-weight: 600;
+}

@@ -1,17 +1,26 @@
 import './App.scss'
-import { Route, Routes } from 'react-router-dom'
-import { NavBar } from './components/layout'
+import { Route, Routes, useLocation } from 'react-router-dom'
+import { NavBar, Networks } from './components/layout'
 import Index from './pages/Index'
+import About from './pages/About'
+
+import { AnimatePresence } from 'framer-motion';
 
 function App() {
+  const location = useLocation();
+
   return (
     <>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<Index />} />
+      <Networks />
+      <AnimatePresence>
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Index/>}/>
+        <Route path="/about" element={<About/>}/>
       </Routes>   
+      </AnimatePresence>
     </> 
   )
 }
 
-export default App
+export default App;

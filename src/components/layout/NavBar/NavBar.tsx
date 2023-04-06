@@ -5,8 +5,7 @@ function NavBar() {
   return (
     <>
       <div className='logo-container'>
-        <img className='logo' src='img/logo.png' alt='Nyali Logo' />
-        <h1 className='logo-text'>Nyali</h1>
+        <h1 className='logo-text'>Nyali.ce</h1>
       </div>
       <nav className='navBar'>
         <Link className='navBar-item' to='/'>Home</Link>
