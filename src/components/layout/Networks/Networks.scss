@@ -5,9 +5,12 @@
     display: flex;
     margin: 16px 0;
     justify-content: center;
-    right: 0;    
+    right: 0;
+    // pointer-events: none;    
+        
 
     @media (min-aspect-ratio: 1/1) {
+        width: auto;
         justify-content: flex-end;
         margin-right: 32px;
     }

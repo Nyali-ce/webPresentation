@@ -1,6 +1,6 @@
 import './App.scss'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import { NavBar, Networks, Background } from './components/layout'
+import { NavBar, Networks, Background, MusicPlayer } from './components/layout'
 import Index from './pages/Index'
 import About from './pages/About'
 
@@ -13,6 +13,7 @@ function App() {
     <>
       <Background />
       <NavBar />
+      <MusicPlayer />
       <Networks />
       <AnimatePresence>
       <Routes location={location} key={location.pathname}>
