@@ -58,10 +58,12 @@ function Background() {
               
                   vec3 starColor;
               
-                  if (distanceFromTopLeft < 0.5) {
-                      starColor = mix(color1, color3, smoothstep(0.0, 1.5, distanceFromTopLeft * 2.0));
+                  if (distanceFromTopLeft < 0.33) {
+                    starColor = mix(color1, color2, smoothstep(0.0, 1.0, distanceFromTopLeft * 3.0));
+                  } else if (distanceFromTopLeft < 0.67) {
+                    starColor = mix(color2, color3, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.33) * 3.0));
                   } else {
-                      starColor = mix(color3, color2, smoothstep(-0.5, 1.0, (distanceFromTopLeft - 0.5) * 2.0));
+                    starColor = mix(color3, color1, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.67) * 3.0));
                   }
               
                   gl_FragColor = vec4(starColor, 1.0);
