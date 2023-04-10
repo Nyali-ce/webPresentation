@@ -1,56 +1,49 @@
-import './Background.scss';
-import * as THREE from 'three';
+import "./Background.scss";
+import * as THREE from "three";
 
 function Background() {
-    window.addEventListener('load', () => {
-        const canvas = document.getElementById('canvas') as HTMLCanvasElement;
-        canvas.style.opacity='0';
-        const pointer = document.querySelector('.pointer') as HTMLDivElement;
+  window.addEventListener("load", () => {
+    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    canvas.style.opacity = "0";
+    const pointer = document.querySelector(".pointer") as HTMLDivElement;
 
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-        let previousRAF: number | null = null;
+    let previousRAF: number | null = null;
 
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-        const fov = 75;
-        const aspect = window.innerWidth / window.innerHeight;
-        const near = 0.1;
-        const far = 1000;
-        const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-        camera.position.set(0, 0, 50);
-        const scene = new THREE.Scene();
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+    const fov = 40;
+    const aspect = window.innerWidth / window.innerHeight;
+    const near = 0.1;
+    const far = 1000;
+    const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+    camera.position.set(0, 0, 50);
+    const scene = new THREE.Scene();
 
-        const stars: THREE.Mesh[] = [];
+    const stars: THREE.Mesh[] = [];
 
-        // shader material that makes the stars glow and a gradient from #00d8ff to #f0b2d8 based on the screen position
-        const material = new THREE.ShaderMaterial({
-            uniforms: {
-                "color1": { value: new THREE.Color("rgb(0, 216, 255)") },
-                "color2": { value: new THREE.Color("rgb(240, 178, 216)") },
-                "color3": { value: new THREE.Color("rgb(238,210,2)")},
-                "resolution": { value: new THREE.Vector2() },
-                "time": { value: 0 }
-              },
-            
-              vertexShader: `
-              uniform float time;
-              attribute float size;
+    const material = new THREE.ShaderMaterial({
+      uniforms: {
+        color1: { value: new THREE.Color("rgb(0, 216, 255)") },
+        color2: { value: new THREE.Color("rgb(240, 178, 216)") },
+        color3: { value: new THREE.Color("rgb(238,210,2)") },
+        resolution: { value: new THREE.Vector2() },
+        time: { value: 0 },
+        amplitude: { value: 0 },
+        frequency: { value: 0 },
+      },
 
-              void main() {
-              vec3 pos = position;
-
-              // Create a wavy effect based on time
-              pos.x += sin(pos.y * 10.0 + time) * 0.1;
-              pos.y += cos(pos.x * 10.0 + time) * 0.1;
-
-              vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
-
-              gl_PointSize = size * ( 300.0 / -mvPosition.z );
-              gl_Position = projectionMatrix * mvPosition;
-              }
+      vertexShader: `
+      uniform float amplitude;
+      uniform float frequency;
+    
+      void main() {
+        vec3 newPosition = position + normal * amplitude * 0.2 * sin(frequency * position.y);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+      }
               `,
-              fragmentShader: `
+      fragmentShader: `
               uniform vec3 color1;
               uniform vec3 color2;
               uniform vec3 color3;
@@ -73,98 +66,130 @@ function Background() {
               
                   gl_FragColor = vec4(starColor, 1.0);
               }
-              `
-        });
+              `,
+    });
 
-        material.uniforms.resolution.value.x = renderer.domElement.width;
-        material.uniforms.resolution.value.y = renderer.domElement.height;
+    material.uniforms.resolution.value.x = renderer.domElement.width;
+    material.uniforms.resolution.value.y = renderer.domElement.height;
 
-        // create 1000 stars and add them to the scene
-        for (let i = 0; i < 1500; i++) {
-            const geometry = new THREE.SphereGeometry(0.25, 24, 24);
-            const star = new THREE.Mesh(geometry, material);
+    // create stars
+    for (let i = 0; i < 1500; i++) {
+      const star = new THREE.Mesh(
+        new THREE.SphereGeometry(0.25, 24, 24),
+        material
+      );
 
-            star.position.set(
-                Math.random() * 500 - 250,
-                Math.random() * 250 - 125,
-                Math.random() * 400 - 200
-            );
-            scene.add(star);
-            stars.push(star);
+      star.position.set(
+        Math.random() * 300 - 150,
+        Math.random() * 200 - 100,
+        Math.random() * 400 - 200
+      );
+      scene.add(star);
+      stars.push(star);
+    }
+
+    const audio = document.querySelector("audio") as HTMLAudioElement;
+    const audioContext = new AudioContext();
+    const source = audioContext.createMediaElementSource(audio);
+    const analyser = audioContext.createAnalyser();
+    source.connect(analyser);
+    analyser.connect(audioContext.destination);
+    analyser.fftSize = 2048;
+    const bufferLength = analyser.frequencyBinCount;
+    const dataArray = new Float32Array(bufferLength);
+
+    const render = (time: number) => {
+      requestAnimationFrame(render);
+
+      analyser.getFloatTimeDomainData(dataArray);
+      const amplitude = Math.max(...dataArray);
+      const frequency = getFrequency(dataArray, audioContext.sampleRate);
+
+      material.uniforms.amplitude.value = amplitude * 10;
+      material.uniforms.frequency.value = frequency / 1000;
+
+      time *= 0.001;
+      material.uniforms.time.value = time;
+
+      previousRAF === null && (previousRAF = time);
+
+      const deltaTime = time - previousRAF;
+      previousRAF = time;
+
+      const cameraSpeed = 3 * deltaTime;
+      const panSpeed = 0.1 * deltaTime;
+
+      const offsetLeft = parseInt(pointer.style.left.split("px")[0]);
+      const offsetTop = -parseInt(pointer.style.top.split("px")[0]);
+
+      if (!isNaN(offsetLeft) && !isNaN(offsetTop)) {
+        const moveX = (offsetLeft / 100 - camera.position.x) * cameraSpeed;
+        const moveY = (offsetTop / 100 - camera.position.y) * cameraSpeed;
+
+        if (Math.abs(moveX) <= 10 && Math.abs(moveY) <= 10) {
+          // position
+          camera.position.x += moveX;
+          camera.position.y += moveY;
+
+          // rotation
+          const target = new THREE.Vector3(
+            offsetLeft / 500 - moveX * panSpeed,
+            offsetTop / 500 - moveY * panSpeed,
+            0
+          );
+          camera.lookAt(target);
         }
+      }
 
+      // move stars
+      for (const star of stars) {
+        star.position.z += 2 * deltaTime;
+        if (star.position.z > 200) {
+          star.position.z -= 400;
+        }
+      }
 
-        const render = (time: number) => {
-            material.uniforms.time.value = time * 0.001;
-            time *= 0.001;
+      renderer.render(scene, camera);
+    };
 
-            previousRAF === null && (previousRAF = time);
+    function getFrequency(dataArray: Float32Array, sampleRate: number) {
+      const peak = Math.max(...dataArray);
+      const index = dataArray.indexOf(peak);
+      const frequency = (index / dataArray.length) * sampleRate;
+      return frequency;
+    }
 
-            const deltaTime = time - previousRAF;
-            previousRAF = time;
+    requestAnimationFrame(render);
 
-            const cameraSpeed = 3 * deltaTime;
+    setTimeout(() => {
+      canvas.style.transition = "opacity 1s";
+      canvas.style.opacity = "1";
+    }, 1200);
 
-            const offsetLeft = parseInt(pointer.style.left.split('px')[0]);
-            const offsetTop = -parseInt(pointer.style.top.split('px')[0]);
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
 
-            if(!isNaN(offsetLeft) && !isNaN(offsetTop)) {
-                const moveX = (offsetLeft / 100 - camera.position.x) * cameraSpeed;
-                const moveY = (offsetTop / 100 - camera.position.y) * cameraSpeed;
+      material.uniforms.resolution.value.x = renderer.domElement.width;
+      material.uniforms.resolution.value.y = renderer.domElement.height;
+    });
 
-                if (Math.abs(moveX) <= 10 && Math.abs(moveY) <= 10) {
-                    camera.position.x += moveX;
-                    camera.position.y += moveY;
+    window.addEventListener("mousemove", (e) => {
+      const pointer = document.querySelector(".pointer") as HTMLDivElement;
+      pointer.style.left = `${e.clientX - window.innerWidth / 2}px`;
+      pointer.style.top = `${e.clientY - window.innerHeight / 2}px`;
+    });
+  });
 
-                    camera.rotation.x = moveY * -0.1;
-                    camera.rotation.y = moveX * 0.1;
-                }
-            }
-
-            for (const star of stars) {
-                star.position.z += 2 * deltaTime;
-                if (star.position.z > 200) {
-                    star.position.z -= 400;
-                }
-            }
-
-
-            renderer.render(scene, camera);
-
-            requestAnimationFrame(render);
-        };
-
-        requestAnimationFrame(render);
-
-        setTimeout(() => {
-            canvas.style.transition = 'opacity 1s';
-            canvas.style.opacity = '1';
-        },1200);
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-
-            material.uniforms.resolution.value.x = renderer.domElement.width;
-            material.uniforms.resolution.value.y = renderer.domElement.height;
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            const pointer = document.querySelector('.pointer') as HTMLDivElement;
-            pointer.style.left = `${e.clientX - window.innerWidth / 2}px`;
-            pointer.style.top = `${e.clientY - window.innerHeight / 2}px`;
-        });
-    })
-    
-    return (
+  return (
     <>
-        <canvas id='canvas'></canvas>
-        <div className='pointer'></div>
+      <canvas id="canvas"></canvas>
+      <div className="pointer"></div>
     </>
-  )
+  );
 }
 
-export default Background
+export default Background;

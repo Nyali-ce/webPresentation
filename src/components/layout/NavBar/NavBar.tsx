@@ -8,8 +8,8 @@ function NavBar() {
         <Link className='logo-text' to='/'>Nyali.ce</Link>
       </div>
       <nav className='navBar'>
-        <Link className='navBar-item' to='/'>Home</Link>
-        <Link className='navBar-item' to='/about'>About</Link>
+        <Link className={`navBar-item ${location.pathname === '/' ? ' active' : ''}`} to='/'>Home</Link>
+        <Link className={`navBar-item ${location.pathname === '/about' ? ' active' : ''}`} to='/about'>About</Link>
       </nav>
     </>
   )
