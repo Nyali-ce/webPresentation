@@ -16,10 +16,14 @@ const createServer = async (root = process.cwd()) => {
 
     app.use(vite.middlewares);
 
+    // Serve compiled files from the dist directory
+    app.use(express.static(resolve('./dist')));
+
+    // Handle all other requests by rendering the index.html file
     app.use('*', async (req, res) => {
         try {
             const url = req.originalUrl;
-            const template = fs.readFileSync(resolve('./index.html'), 'utf-8');
+            const template = fs.readFileSync(resolve('./dist/index.html'), 'utf-8');
             const [appHtml] = await vite.transformIndexHtml(url, template);
             res.status(200).set({ 'Content-Type': 'text/html' }).end(appHtml);
         } catch (e: any) {

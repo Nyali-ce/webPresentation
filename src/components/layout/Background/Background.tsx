@@ -119,7 +119,7 @@ function Background() {
       previousRAF = time;
 
       const cameraSpeed = 3 * deltaTime;
-      const panSpeed = 0.1 * deltaTime;
+      const panSpeed = 0.0001 * deltaTime;
 
       const offsetLeft = parseInt(pointer.style.left.split("px")[0]);
       const offsetTop = -parseInt(pointer.style.top.split("px")[0]);

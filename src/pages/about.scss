@@ -1,39 +1,38 @@
 .aboutSection {
-    padding-top: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: auto;
-    width: 70%;
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  width: 70%;
 }
 
 .aboutTitle {
-    font-size: 2.5rem;
-    font-weight: 600;
-    line-height: 1.5;
-    margin: 0;
-    margin-bottom: 16px;
-    color: #cacaca;
+  font-size: 2.5rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  margin-bottom: 16px;
+  color: #cacaca;
 }
 
 .aboutDescription {
-    font-size: 1.2rem;
-    font-weight: 300;
-    line-height: 1.5;
-    margin-bottom: 16px;
-
-    color: #cacaca;
-    min-width: 400px;
-    max-width: 700px;
-    max-height: calc(100vh - 196.5px);
-    text-align: justify;
-    overflow: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: #f0b2d8 #242424;
+  width: fit-content;
+  text-align: justify;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  color: #cacaca;
+  max-width: 700px;
+  max-height: calc(100vh - 196.5px);
+  overflow: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: #f0b2d8 #242424;
 }
 
 .aboutDescription[data-canvas-opacity="1"] {
-    background-color: #000000a0;
-    box-shadow: 0 0 20px #000000a0, 0 0 40px #000000a0, 0 0 80px #000000a0, 0 0 160px #000000a0;
-  }
+  background-color: #000000a0;
+  box-shadow: 0 0 20px 20px #000000a0;
+}
