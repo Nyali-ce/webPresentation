@@ -1,8 +1,12 @@
 import "./Background.scss";
 import * as THREE from "three";
+import { useEffect } from "react";
 
 function Background() {
-  window.addEventListener("load", () => {
+  // only use useEffect once
+
+  useEffect(() => {
+    console.log("load");
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     canvas.style.opacity = "0";
     const pointer = document.querySelector(".pointer") as HTMLDivElement;
@@ -35,40 +39,40 @@ function Background() {
       },
 
       vertexShader: `
-      uniform float amplitude;
-      uniform float frequency;
-    
-      void main() {
-        vec3 newPosition = position + normal * amplitude * 0.2 * sin(frequency * position.y);
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
-      }
-              `,
+          uniform float amplitude;
+          uniform float frequency;
+        
+          void main() {
+            vec3 newPosition = position + normal * amplitude * 0.2 * sin(frequency * position.y);
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+          }
+                  `,
       fragmentShader: `
-              uniform vec3 color1;
-              uniform vec3 color2;
-              uniform vec3 color3;
-              uniform vec2 resolution;
-              
-              varying vec2 vUv;
-              
-              void main() {
-                  vec2 screenPos = gl_FragCoord.xy;
-                  float scalingFactor = 1.0; // adjust this to control the steepness of the gradient
-                  float distanceFromTopLeft = distance(vec2(0.0), screenPos * scalingFactor) / length(resolution);
-              
-                  vec3 starColor;
-              
-                  if (distanceFromTopLeft < 0.33) {
-                    starColor = mix(color1, color2, smoothstep(0.0, 1.0, distanceFromTopLeft * 3.0));
-                  } else if (distanceFromTopLeft < 0.67) {
-                    starColor = mix(color2, color3, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.33) * 3.0));
-                  } else {
-                    starColor = mix(color3, color1, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.67) * 3.0));
+                  uniform vec3 color1;
+                  uniform vec3 color2;
+                  uniform vec3 color3;
+                  uniform vec2 resolution;
+                  
+                  varying vec2 vUv;
+                  
+                  void main() {
+                      vec2 screenPos = gl_FragCoord.xy;
+                      float scalingFactor = 1.0; // adjust this to control the steepness of the gradient
+                      float distanceFromTopLeft = distance(vec2(0.0), screenPos * scalingFactor) / length(resolution);
+                  
+                      vec3 starColor;
+                  
+                      if (distanceFromTopLeft < 0.33) {
+                        starColor = mix(color1, color2, smoothstep(0.0, 1.0, distanceFromTopLeft * 3.0));
+                      } else if (distanceFromTopLeft < 0.67) {
+                        starColor = mix(color2, color3, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.33) * 3.0));
+                      } else {
+                        starColor = mix(color3, color1, smoothstep(0.0, 1.0, (distanceFromTopLeft - 0.67) * 3.0));
+                      }
+                  
+                      gl_FragColor = vec4(starColor, 1.0);
                   }
-              
-                  gl_FragColor = vec4(starColor, 1.0);
-              }
-              `,
+                  `,
     });
 
     material.uniforms.resolution.value.x = renderer.domElement.width;
@@ -99,6 +103,8 @@ function Background() {
     analyser.fftSize = 2048;
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Float32Array(bufferLength);
+
+    let frames = 0;
 
     const render = (time: number) => {
       requestAnimationFrame(render);
@@ -152,6 +158,12 @@ function Background() {
       }
 
       renderer.render(scene, camera);
+
+      frames++;
+      if (frames == 30) {
+        canvas.style.transition = "opacity 1s";
+        canvas.style.opacity = "1";
+      }
     };
 
     function getFrequency(dataArray: Float32Array, sampleRate: number) {
@@ -162,11 +174,6 @@ function Background() {
     }
 
     requestAnimationFrame(render);
-
-    setTimeout(() => {
-      canvas.style.transition = "opacity 1s";
-      canvas.style.opacity = "1";
-    }, 1200);
 
     window.addEventListener("resize", () => {
       canvas.width = window.innerWidth;
@@ -184,7 +191,7 @@ function Background() {
       pointer.style.left = `${e.clientX - window.innerWidth / 2}px`;
       pointer.style.top = `${e.clientY - window.innerHeight / 2}px`;
     });
-  });
+  }, []);
 
   return (
     <>

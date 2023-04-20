@@ -1,8 +1,9 @@
 import "./about.scss";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 function About() {
-  window.addEventListener("load", () => {
+  useEffect(() => {
     const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
     const aboutDescription = document.querySelector(
       ".aboutDescription"
@@ -16,6 +17,7 @@ function About() {
       }
     });
   });
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
