@@ -3,10 +3,7 @@ import * as THREE from "three";
 import { useEffect } from "react";
 
 function Background() {
-  // only use useEffect once
-
   useEffect(() => {
-    console.log("load");
     const canvas = document.getElementById("canvas") as HTMLCanvasElement;
     canvas.style.opacity = "0";
     const pointer = document.querySelector(".pointer") as HTMLDivElement;

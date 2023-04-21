@@ -18,7 +18,7 @@
 }
 
 .aboutDescription {
-  width: fit-content;
+  width: max-content;
   text-align: justify;
   font-size: 1.2rem;
   font-weight: 300;
@@ -27,9 +27,7 @@
   color: #cacaca;
   max-width: 700px;
   max-height: calc(100vh - 196.5px);
-  overflow: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: #f0b2d8 #242424;
+  overflow: hidden;
 }
 
 .aboutDescription[data-canvas-opacity="1"] {

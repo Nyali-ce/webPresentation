@@ -35,7 +35,10 @@ function About() {
               : "0"
           }
         >
-          I code things and stuff 😎
+          I code things and stuff 😎I code things and stuff 😎I code things and
+          stuff 😎I code things and stuff 😎I code things and stuff 😎I code
+          things and stuff 😎I code things and stuff 😎I code things and stuff
+          😎I code things and stuff 😎I code things and stuff 😎
         </p>
       </div>
     </motion.div>

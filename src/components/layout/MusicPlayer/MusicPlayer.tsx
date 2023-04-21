@@ -26,7 +26,7 @@ function MusicPlayer() {
         musicSlash.style.display = "block";
       }
     });
-  });
+  }, []);
 
   return (
     <div className="musicContainer">
