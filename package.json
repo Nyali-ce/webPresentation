@@ -3,12 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "server/dist/server.js",
+  "main": "",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cd server && tsc",
-    "preview": "vite preview",
-    "start": "nodemon -e ts,tsx,scss --exec \"npm run build && node .\""
+    "build": "tsc && vite build",
+    "preview": "vite preview --port 80",
+    "start": "nodemon -e ts,tsx,scss --exec \"npm run build && npm run preview\""
   },
   "dependencies": {
     "framer-motion": "^10.10.0",
