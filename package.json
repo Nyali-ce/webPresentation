@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview --port 80",
+    "preview": "vite preview --port 80 --host",
     "start": "nodemon -e ts,tsx,scss --exec \"npm run build && npm run preview\""
   },
   "dependencies": {

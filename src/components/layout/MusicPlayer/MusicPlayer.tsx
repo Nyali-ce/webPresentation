@@ -30,7 +30,9 @@ function MusicPlayer() {
 
   return (
     <div className="musicContainer">
-      <audio className="music" src="audio/background.mp3" loop></audio>
+      <audio className="music" loop>
+        <source src="audio/background.mp3" type="audio/mpeg" />
+      </audio>
       <button className="musicButton">
         <img
           id="music-slash"
