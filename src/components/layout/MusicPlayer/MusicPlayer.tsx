@@ -1,4 +1,5 @@
 import "./MusicPlayer.scss";
+import backgroundMusic from "/audio/background.mp3";
 import { useEffect } from "react";
 
 function MusicPlayer() {
@@ -31,7 +32,7 @@ function MusicPlayer() {
   return (
     <div className="musicContainer">
       <audio className="music" loop>
-        <source src="audio/background.mp3" type="audio/mpeg" />
+        <source src={backgroundMusic} type="audio/mp3" />
       </audio>
       <button className="musicButton">
         <img
