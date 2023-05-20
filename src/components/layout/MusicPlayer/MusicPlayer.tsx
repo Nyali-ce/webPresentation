@@ -14,7 +14,7 @@ function MusicPlayer() {
       "music-slash"
     ) as HTMLImageElement;
 
-    audio.volume = 0.3;
+    audio.volume = 0.1;
 
     musicButton.addEventListener("click", () => {
       if (audio.paused) {
