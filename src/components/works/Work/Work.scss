@@ -1,0 +1,41 @@
+.work {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.workImage {
+  position: relative;
+  width: 50%;
+  max-width: 50%;
+  max-height: calc(100vh - 264px);
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.workImage img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.workDescription {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.8);
+  border-top-right-radius: 10px;
+  color: #fff;
+}
+
+.workTitle {
+  font-size: 18px;
+  margin: 0;
+}
+
+.workDate {
+  font-size: 14px;
+  margin: 0;
+}

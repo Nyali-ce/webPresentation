@@ -1,7 +1,36 @@
+import { useState } from "react";
 import "./works.scss";
+import { Work, WorksIndicator } from "../components/works";
 import { motion } from "framer-motion";
 
 function Works() {
+  const [currentWorkIndex, setCurrentWorkIndex] = useState(0);
+  const works = [
+    {
+      title: "r/place Clone",
+      date: "2023/05/20",
+      url: "http://nyalice.com/place",
+      image: "img/png/place.png",
+    },
+    {
+      title: "r/place Clone 2",
+      date: "2023/05/20",
+      url: "http://nyalice.com",
+      image: "img/png/place.png",
+    },
+    // Add more works to the array as needed
+  ];
+
+  const handleNextWork = () => {
+    setCurrentWorkIndex((prevIndex) => (prevIndex + 1) % works.length);
+  };
+
+  const handlePrevWork = () => {
+    setCurrentWorkIndex((prevIndex) =>
+      prevIndex === 0 ? works.length - 1 : prevIndex - 1
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -10,18 +39,19 @@ function Works() {
     >
       <div className="worksSection">
         <h1 className="worksTitle">Works</h1>
-        <p
-          className="aboutDescription"
-          data-canvas-opacity={
-            (document.getElementById("canvas") as HTMLCanvasElement)?.style
-              ?.opacity == "1"
-              ? "1"
-              : "0"
-          }
-        >
-          I code things and stuff 😎
-        </p>
+        <Work
+          title={works[currentWorkIndex].title}
+          date={works[currentWorkIndex].date}
+          url={works[currentWorkIndex].url}
+          image={works[currentWorkIndex].image}
+        />
       </div>
+      <WorksIndicator
+        onNext={handleNextWork}
+        onPrev={handlePrevWork}
+        total={works.length}
+        current={currentWorkIndex}
+      />
     </motion.div>
   );
 }

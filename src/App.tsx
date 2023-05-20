@@ -7,7 +7,7 @@ import About from "./pages/About";
 
 import { AnimatePresence } from "framer-motion";
 
-function App() {
+const App: React.FC = () => {
   const location = useLocation();
 
   return (
@@ -25,6 +25,6 @@ function App() {
       </AnimatePresence>
     </>
   );
-}
+};
 
 export default App;
