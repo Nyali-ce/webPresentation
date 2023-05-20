@@ -1,57 +1,59 @@
 .logo-container {
-    position: fixed;
-    display: flex;
-    align-items: center;
-    top: 0;
-    left: 0;
-    padding: 32px;
-    height: 40px;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  padding: 32px;
+  height: 40px;
+  z-index: 1;
 }
 
 .logo-text {
-    margin-left: 16px;
-    font-size: 2rem;
-    font-weight: 300;
-    line-height: 1.5;
-    text-decoration: none;
-    color: white;
+  margin-left: 16px;
+  font-size: 2rem;
+  font-weight: 300;
+  line-height: 1.5;
+  text-decoration: none;
+  color: white;
 }
 
 .navBar {
-    position: fixed;
-    top: 0;
-    right: 0;
-    padding: 32px;
-    width: auto;
-    height: 40px;
-    display: flex;
-    align-items: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 32px;
+  width: auto;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  z-index: 1;
 }
 
 .navBar-item {
-    position: relative;
-    display: inline-block;
-    margin: 0 16px;
-    font-size: 1.2rem;
-    font-weight: 300;
-    line-height: 1.5;
-    color: white;
-    text-decoration: none;
-    text-underline-offset: 4px;
+  position: relative;
+  display: inline-block;
+  margin: 0 16px;
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.5;
+  color: white;
+  text-decoration: none;
+  text-underline-offset: 4px;
 }
 
 .navBar-item::after {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 2px;
-    background-color: white;
-    transition: width 0.3s ease;
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
 }
 
 .navBar-item.active::after {
-    width: 100%;
+  width: 100%;
 }

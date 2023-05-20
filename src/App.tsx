@@ -1,10 +1,11 @@
-import './App.scss'
-import { Route, Routes, useLocation } from 'react-router-dom'
-import { NavBar, Networks, Background, MusicPlayer } from './components/layout'
-import Index from './pages/Index'
-import About from './pages/About'
+import "./App.scss";
+import { Route, Routes, useLocation } from "react-router-dom";
+import { NavBar, Networks, Background, MusicPlayer } from "./components/layout";
+import Index from "./pages/Index";
+import Works from "./pages/Works";
+import About from "./pages/About";
 
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   const location = useLocation();
@@ -16,13 +17,14 @@ function App() {
       <MusicPlayer />
       <Networks />
       <AnimatePresence>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Index/>}/>
-        <Route path="/about" element={<About/>}/>
-      </Routes>   
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={<Index />} />
+          <Route path="/works" element={<Works />} />
+          <Route path="/about" element={<About />} />
+        </Routes>
       </AnimatePresence>
-    </> 
-  )
+    </>
+  );
 }
 
 export default App;

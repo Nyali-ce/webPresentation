@@ -5,7 +5,10 @@
   align-items: center;
   justify-content: center;
   margin: auto;
-  width: 70%;
+  left: 0;
+  right: 0;
+  position: absolute;
+  z-index: 0;
 }
 
 .aboutTitle {

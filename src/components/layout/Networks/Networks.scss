@@ -1,29 +1,28 @@
 .networks {
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    display: flex;
-    margin: 16px 0;
-    justify-content: center;
-    right: 0;
-    // pointer-events: none;    
-        
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  display: flex;
+  margin: 16px 0;
+  justify-content: center;
+  right: 0;
+  z-index: 1;
 
-    @media (min-aspect-ratio: 1/1) {
-        width: auto;
-        justify-content: flex-end;
-        margin-right: 32px;
-    }
+  @media (min-aspect-ratio: 1/1) {
+    width: auto;
+    justify-content: flex-end;
+    margin-right: 32px;
+  }
 }
 
 .networksLink {
-    margin: 0 16px;
+  margin: 0 16px;
 }
 
 .networksLink a {
-    color: #cacaca;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    font-weight: 600;
+  color: #cacaca;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
 }
