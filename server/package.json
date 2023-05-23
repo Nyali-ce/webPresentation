@@ -2,13 +2,13 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "compiled/server.js",
   "scripts": {
     "build:server": "tsc",
     "build:client": "cd ../client && npm run build && cd ../server",
     "build": "npm run build:server && npm run build:client",
-    "start": "npm run build && node server.js",
-    "dev": "npm run build && nodemon -e ts server.js"
+    "start": "npm run build && node .",
+    "dev": "npm run build && nodemon -e ts ."
   },
   "author": "",
   "license": "ISC",
