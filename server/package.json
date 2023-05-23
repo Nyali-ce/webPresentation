@@ -8,7 +8,8 @@
     "build:client": "cd ../client && npm run build && cd ../server",
     "build": "npm run build:server && npm run build:client",
     "start": "npm run build && node .",
-    "dev": "npm run build && nodemon -e ts ."
+    "dev": "nodemon -e ts --exec \"npm run start\"",
+    "dev:no-client": "nodemon -e ts --exec \"npm run build:server && node .\""
   },
   "author": "",
   "license": "ISC",
