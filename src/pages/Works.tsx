@@ -38,7 +38,7 @@ function Works() {
       exit={{ opacity: 0 }}
     >
       <div className="worksSection">
-        <h1 className="worksTitle">Works</h1>
+        <h1 className="worksTitle">Works (WIP!!!)</h1>
         <Work
           title={works[currentWorkIndex].title}
           date={works[currentWorkIndex].date}
