@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 function About() {
   useEffect(() => {
-    const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
+    const canvas = document.getElementById("background") as HTMLCanvasElement;
     const aboutDescription = document.querySelector(
       ".aboutDescription"
     ) as HTMLParagraphElement;
@@ -29,7 +29,7 @@ function About() {
         <p
           className="aboutDescription"
           data-canvas-opacity={
-            (document.getElementById("canvas") as HTMLCanvasElement)?.style
+            (document.getElementById("background") as HTMLCanvasElement)?.style
               ?.opacity == "1"
               ? "1"
               : "0"

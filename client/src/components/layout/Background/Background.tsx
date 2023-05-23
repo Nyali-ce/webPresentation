@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 function Background() {
   useEffect(() => {
-    const canvas = document.getElementById("canvas") as HTMLCanvasElement;
+    const canvas = document.getElementById("background") as HTMLCanvasElement;
     canvas.style.opacity = "0";
     const pointer = document.querySelector(".pointer") as HTMLDivElement;
 
@@ -192,7 +192,7 @@ function Background() {
 
   return (
     <>
-      <canvas id="canvas"></canvas>
+      <canvas id="background"></canvas>
       <div className="pointer"></div>
     </>
   );
