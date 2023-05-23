@@ -1,15 +1,28 @@
-# OUTDATED
+# My Portfolio Website
 
-# To host the website locally, run
+## Description
 
-npm run preview
+This is my portfolio website. It is built using [react](https://reactjs.org/), [vite](https://vitejs.dev/), [framer-motion](https://www.framer.com/motion/), [sass](https://sass-lang.com/), and [three.js](https://threejs.org/).
 
-# to run in development mode, or
+## Installation
 
-npm run dev
+1. Clone the repository
+2. Run `npm install`
 
-# to run in production mode.
+## Usage
 
-npm run start
+### Development
 
-# Opening the html file directly (in dist) in the browser will not work without disabling CORS policy in your browser.
+Run `npm run dev` to start the development server.
+
+### Production
+
+Run `npm run start` to start the production server.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Author
+
+[Nyali-ce](http://nyalice.com)
