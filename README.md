@@ -25,4 +25,4 @@ Run `npm run start` to start the production server.
 
 ## Author
 
-[Nyali-ce](http://nyalice.com)
+[Nyalice](http://nyalice.com)
