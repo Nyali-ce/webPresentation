@@ -9,13 +9,7 @@ function Works() {
     {
       title: "r/place Clone",
       date: "2023/05/20",
-      url: "http://nyalice.com/place",
-      image: "img/png/place.png",
-    },
-    {
-      title: "r/place Clone 2",
-      date: "2023/05/20",
-      url: "http://nyalice.com",
+      url: "place",
       image: "img/png/place.png",
     },
     // Add more works to the array as needed
