@@ -24,8 +24,8 @@ function About() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="aboutSection">
-        <h1 className="aboutTitle">About Me</h1>
+      <h1 className="header">About Me</h1>
+      <div className="mainContent">
         <p
           className="aboutDescription"
           data-canvas-opacity={

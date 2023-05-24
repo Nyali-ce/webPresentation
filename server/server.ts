@@ -41,7 +41,6 @@ wss.on('connection', (ws: WebSocket) => {
         const imageData = ctx.getImageData(0, 0, 1000, 1000);
         const pixelData = Array.from(imageData.data);
 
-
         ws.send(JSON.stringify({
             type: 'canvas',
             canvas: pixelData,

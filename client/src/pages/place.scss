@@ -5,6 +5,7 @@
   align-items: center;
   justify-content: center;
 }
+
 .place-canvas {
   position: absolute;
   top: 104px;
@@ -14,4 +15,5 @@
   overflow: hidden;
   border-radius: 20px;
   background-color: #2e2e2e;
+  image-rendering: pixelated;
 }

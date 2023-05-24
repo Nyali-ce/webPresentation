@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "./works.scss";
 import { Work, WorksIndicator } from "../components/works";
 import { motion } from "framer-motion";
 
@@ -31,8 +30,8 @@ function Works() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="worksSection">
-        <h1 className="worksTitle">Works (WIP!!!)</h1>
+      <h1 className="header">Works (WIP!!!)</h1>
+      <div className="mainContent">
         <Work
           title={works[currentWorkIndex].title}
           date={works[currentWorkIndex].date}
