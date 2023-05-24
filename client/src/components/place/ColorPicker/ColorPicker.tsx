@@ -1,15 +1,15 @@
 import React from "react";
-import "./Work.scss";
+import "./ColorPicker.scss";
 
 interface ColorPickerProps {
   colors: string[];
 }
 
-const Work: React.FC<ColorPickerProps> = ({ colors }) => {
+const ColorPicker: React.FC<ColorPickerProps> = ({ colors }) => {
   return (
     <>
       <div className="colorPicker">
-        {colors.map((color, index) => (
+        {colors.map((color) => (
           <div
             key={color}
             className="colorPicker__color"
@@ -21,4 +21,4 @@ const Work: React.FC<ColorPickerProps> = ({ colors }) => {
   );
 };
 
-export default Work;
+export default ColorPicker;

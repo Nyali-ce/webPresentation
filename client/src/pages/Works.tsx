@@ -9,7 +9,7 @@ function Works() {
     {
       title: "r/place Clone",
       date: "2023/05/20",
-      url: "place",
+      url: "/place",
       image: "img/png/place.png",
     },
     // Add more works to the array as needed

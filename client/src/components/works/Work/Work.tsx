@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Work.scss";
 
 interface WorkProps {
@@ -13,9 +14,9 @@ const Work: React.FC<WorkProps> = ({ title, date, url, image }) => {
     <>
       <div className="work">
         <div className="workImage">
-          <a href={url} target="blank_">
+          <Link to={url}>
             <img src={image} alt={title} />
-          </a>
+          </Link>
           <div className="workDescription">
             <h2 className="workTitle">{title}</h2>
             <p className="workDate">{date}</p>
