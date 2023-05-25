@@ -74,25 +74,44 @@ function Place() {
 
     const start = { x: 0, y: 0 };
 
+    let scaleX = 1;
+    let scaleY = 1;
+
     let panning = false;
 
     const draw = () => {
       ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
-      ctx?.drawImage(img, offsetX, offsetY, canvas!.width, canvas!.height);
+
+      const [x, y] = relativeToAbsolute(0, 0);
+      console.log(offsetX, canvas!.width, canvas!.clientWidth, scaleX);
+
+      ctx?.drawImage(
+        img,
+        -x,
+        -y,
+        canvas!.width * scaleX,
+        canvas!.height * scaleY
+      );
     };
 
     const relativeToAbsolute = (x: number, y: number) => {
-      return [x + offsetX, y + offsetY];
+      return [
+        x - (offsetX / canvas!.clientWidth) * canvas!.width * scaleX,
+        y - (offsetY / canvas!.clientHeight) * canvas!.height * scaleY,
+      ];
     };
 
     const absoluteToRelative = (x: number, y: number) => {
-      return [x - offsetX, y - offsetY];
+      return [
+        x / scaleX + (offsetX / canvas!.width) * canvas!.clientWidth,
+        y / scaleY + (offsetY / canvas!.height) * canvas!.clientHeight,
+      ];
     };
 
     const handleMouseDown = (e: MouseEvent) => {
       e.preventDefault();
 
-      const [x, y] = absoluteToRelative(e.clientX, e.clientY);
+      const [x, y] = [e.clientX, e.clientY];
       start.x = x;
       start.y = y;
       panning = true;
@@ -109,16 +128,51 @@ function Place() {
 
       if (!panning) return;
 
-      const [x, y] = absoluteToRelative(e.clientX, e.clientY);
+      const [x, y] = [e.clientX, e.clientY];
 
-      offsetX = offsetX + (x - start.x);
-      offsetY = offsetY + (y - start.y);
+      offsetX += (x - start.x) / scaleX;
+      offsetY += (y - start.y) / scaleY;
+
+      start.x = x;
+      start.y = y;
 
       draw();
     };
 
     const handleMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
+
+      const canvasRect = canvas!.getBoundingClientRect();
+      const [canvasX, canvasY] = [canvasRect.left, canvasRect.top];
+
+      const [mouseX, mouseY] = absoluteToRelative(
+        e.clientX - canvasX,
+        e.clientY - canvasY
+      );
+
+      const delta = e.deltaY;
+      if (delta < 0) {
+        scaleX = scaleX * 1.1;
+        scaleY = scaleY * 1.1;
+      } else {
+        scaleX = scaleX / 1.1;
+        scaleY = scaleY / 1.1;
+      }
+
+      if (scaleX < 1) scaleX = 1;
+      if (scaleY < 1) scaleY = 1;
+      if (scaleX > 20) scaleX = 20;
+      if (scaleY > 20) scaleY = 20;
+
+      const [newMouseX, newMouseY] = absoluteToRelative(
+        e.clientX - canvasX,
+        e.clientY - canvasY
+      );
+
+      offsetX += newMouseX - mouseX;
+      offsetY += newMouseY - mouseY;
+
+      draw();
     };
 
     div?.addEventListener("mousedown", handleMouseDown);
