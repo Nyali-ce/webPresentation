@@ -13,6 +13,8 @@ function Place() {
     const ctx = canvas?.getContext("2d");
     ctx!.imageSmoothingEnabled = false;
 
+    const div = divRef.current;
+
     let img = new Image();
 
     let socket: WebSocket;
@@ -66,70 +68,57 @@ function Place() {
         img.src = canvas!.toDataURL();
       }
     };
-    const div = divRef.current;
 
-    let scale = 1;
     let offsetX = 0;
     let offsetY = 0;
-    let dragging = false;
-    let lastX = 0;
-    let lastY = 0;
-    let cursor = { x: 0, y: 0 };
+
+    const start = { x: 0, y: 0 };
+
+    let panning = false;
 
     const draw = () => {
       ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
-      ctx?.drawImage(
-        img,
-        // drawn so that no matter the scale, the image is centered
-        offsetX - (img.width * scale - canvas!.width) / 2,
-        offsetY - (img.height * scale - canvas!.height) / 2,
-        img.width * scale,
-        img.height * scale
-      );
+      ctx?.drawImage(img, offsetX, offsetY, canvas!.width, canvas!.height);
+    };
+
+    const relativeToAbsolute = (x: number, y: number) => {
+      return [x + offsetX, y + offsetY];
+    };
+
+    const absoluteToRelative = (x: number, y: number) => {
+      return [x - offsetX, y - offsetY];
     };
 
     const handleMouseDown = (e: MouseEvent) => {
-      lastX = e.clientX - (canvas?.offsetLeft || 0);
-      lastY = e.clientY - (canvas?.offsetTop || 0);
-      dragging = true;
+      e.preventDefault();
+
+      const [x, y] = absoluteToRelative(e.clientX, e.clientY);
+      start.x = x;
+      start.y = y;
+      panning = true;
     };
 
-    const handleMouseUp = () => {
-      dragging = false;
+    const handleMouseUp = (e: MouseEvent) => {
+      e.preventDefault();
+
+      panning = false;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (dragging) {
-        const x = e.clientX - (canvas?.offsetLeft || 0);
-        const y = e.clientY - (canvas?.offsetTop || 0);
-        cursor.x = x;
-        cursor.y = y;
-        const dx = x - lastX;
-        const dy = y - lastY;
-        offsetX += dx;
-        offsetY += dy;
-        lastX = x;
-        lastY = y;
+      e.preventDefault();
 
-        draw();
-      }
+      if (!panning) return;
+
+      const [x, y] = absoluteToRelative(e.clientX, e.clientY);
+
+      offsetX = offsetX + (x - start.x);
+      offsetY = offsetY + (y - start.y);
+
+      draw();
     };
 
     const handleMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
-      const zoomFactor = 1.1;
-      const delta = e.deltaY;
-      if (delta < 0) {
-        scale *= zoomFactor;
-        offsetX -= (cursor.x - offsetX) * zoomFactor;
-        offsetY -= (cursor.y - offsetY) * zoomFactor;
-      } else {
-        scale /= zoomFactor;
-        offsetX += (cursor.x - offsetX) * (1 - 1 / zoomFactor);
-        offsetY += (cursor.y - offsetY) * (1 - 1 / zoomFactor);
-      }
-
-      draw();
     };
 
     div?.addEventListener("mousedown", handleMouseDown);
