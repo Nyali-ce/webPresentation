@@ -83,7 +83,6 @@ function Place() {
       ctx?.clearRect(0, 0, canvas!.width, canvas!.height);
 
       const [x, y] = relativeToAbsolute(0, 0);
-      console.log(offsetX, canvas!.width, canvas!.clientWidth, scaleX);
 
       ctx?.drawImage(
         img,
@@ -139,40 +138,87 @@ function Place() {
       draw();
     };
 
+    let animationOffsetX = 0;
+    let animationOffsetY = 0;
+    let animationScaleOffsetX = 0;
+    let animationScaleOffsetY = 0;
+    let startTime = 0;
+
     const handleMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
 
       const canvasRect = canvas!.getBoundingClientRect();
       const [canvasX, canvasY] = [canvasRect.left, canvasRect.top];
 
+      // calculate mouse position before the zoom
+
+      scaleX += animationScaleOffsetX;
+      scaleY += animationScaleOffsetY;
+
       const [mouseX, mouseY] = absoluteToRelative(
         e.clientX - canvasX,
         e.clientY - canvasY
       );
 
+      scaleX -= animationScaleOffsetX;
+      scaleY -= animationScaleOffsetY;
+
       const delta = e.deltaY;
       if (delta < 0) {
-        scaleX = scaleX * 1.1;
-        scaleY = scaleY * 1.1;
+        animationScaleOffsetX +=
+          (scaleX + animationScaleOffsetX) * 1.1 -
+          (scaleX + animationScaleOffsetX);
+        animationScaleOffsetY +=
+          (scaleY + animationScaleOffsetY) * 1.1 -
+          (scaleY + animationScaleOffsetY);
       } else {
-        scaleX = scaleX / 1.1;
-        scaleY = scaleY / 1.1;
+        animationScaleOffsetX +=
+          (scaleX + animationScaleOffsetX) / 1.1 -
+          (scaleX + animationScaleOffsetX);
+        animationScaleOffsetY +=
+          (scaleY + animationScaleOffsetY) / 1.1 -
+          (scaleY + animationScaleOffsetY);
       }
 
-      if (scaleX < 1) scaleX = 1;
-      if (scaleY < 1) scaleY = 1;
-      if (scaleX > 20) scaleX = 20;
-      if (scaleY > 20) scaleY = 20;
+      // calculate new mouse position using the scale after the zoom
+      scaleX += animationScaleOffsetX;
+      scaleY += animationScaleOffsetY;
 
       const [newMouseX, newMouseY] = absoluteToRelative(
         e.clientX - canvasX,
         e.clientY - canvasY
       );
 
-      offsetX += newMouseX - mouseX;
-      offsetY += newMouseY - mouseY;
+      scaleX -= animationScaleOffsetX;
+      scaleY -= animationScaleOffsetY;
 
-      draw();
+      animationOffsetX += newMouseX - mouseX;
+      animationOffsetY += newMouseY - mouseY;
+
+      startTime = Date.now();
+
+      const animate = () => {
+        const time = Date.now() - startTime;
+        const progress = Math.min(time / 500, 1);
+
+        offsetX += animationOffsetX * progress;
+        offsetY += animationOffsetY * progress;
+        scaleX += animationScaleOffsetX * progress;
+        scaleY += animationScaleOffsetY * progress;
+
+        animationOffsetX -= animationOffsetX * progress;
+        animationOffsetY -= animationOffsetY * progress;
+        animationScaleOffsetX -= animationScaleOffsetX * progress;
+        animationScaleOffsetY -= animationScaleOffsetY * progress;
+
+        draw();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        }
+      };
+
+      animate();
     };
 
     div?.addEventListener("mousedown", handleMouseDown);
