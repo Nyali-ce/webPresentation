@@ -54,7 +54,7 @@ function Background() {
                   
                   void main() {
                       vec2 screenPos = gl_FragCoord.xy;
-                      float scalingFactor = 1.0; // adjust this to control the steepness of the gradient
+                      float scalingFactor = 1.0;
                       float distanceFromTopLeft = distance(vec2(0.0), screenPos * scalingFactor) / length(resolution);
                   
                       vec3 starColor;
