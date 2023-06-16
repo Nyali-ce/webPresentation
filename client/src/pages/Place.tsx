@@ -86,6 +86,10 @@ function Place() {
 
       ctx?.drawImage(
         img,
+        0,
+        0,
+        canvas!.width,
+        canvas!.height,
         -x,
         -y,
         canvas!.width * scaleX,

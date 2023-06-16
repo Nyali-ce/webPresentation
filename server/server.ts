@@ -6,7 +6,7 @@ import fs from 'fs';
 import { createCanvas, loadImage } from 'canvas';
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
