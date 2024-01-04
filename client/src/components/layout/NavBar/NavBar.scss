@@ -42,6 +42,12 @@
   text-underline-offset: 4px;
 }
 
+.navBar-home {
+  @media (max-aspect-ratio: 1/1) {
+    display: none;
+  }
+}
+
 .navBar-item::after {
   content: "";
   display: block;

@@ -18,10 +18,6 @@ app.use(express.static(clientBuildPath));
 app.use(fileUpload());
 app.use(express.json());
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-});
-
 app.post('/api/motd', (req, res) => {
     const motd = req.body.motd;
 
@@ -66,6 +62,22 @@ app.post('/api/upload', (req, res) => {
 
         res.json({ fileName: fileName, filePath: `/uploads/${fileName}` });
     });
+});
+
+app.get('/api/download', (req, res) => {
+    console.log('download request received');
+    const fileName = 'flstudio.zip';
+    const filePath = path.join(__dirname, 'uploads', fileName);
+
+    res.download(filePath, fileName, (err) => {
+        if (err) {
+            console.error(err);
+        }
+    });
+});
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
 });
 
 app.listen(port, () => {

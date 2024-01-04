@@ -8,6 +8,12 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+
+  @media (max-aspect-ratio: 1/1) {
+    // on mobile, move the indicator under the work
+    margin: 64px 0;    
+    
+  }
 }
 
 .prevButton,

@@ -11,13 +11,13 @@ function NavBar() {
       </div>
       <nav className="navBar">
         <Link
-          className={`navBar-item ${
+          className={`navBar-item navBar-home ${
             location.pathname === "/" ? " active" : ""
           }`}
           to="/"
         >
           Home
-        </Link>
+        </Link> 
         <Link
           className={`navBar-item ${
             location.pathname === "/works" ? " active" : ""

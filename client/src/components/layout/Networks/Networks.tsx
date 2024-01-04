@@ -11,7 +11,7 @@ function NavBar() {
             <a href="https://twitter.com/Nyali_ce" target='blank_'>Twitter</a>
         </div>
         <div className='networksLink networksEmail'>
-            <a href="mailto:alice@nyalice.com">alice@nyalice.com</a>
+            <a href="mailto:nyali@nyalice.com">nyali@nyalice.com</a>
         </div>
       </div>
     </>
