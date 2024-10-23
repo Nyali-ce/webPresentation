@@ -30,24 +30,56 @@ function Files() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <h1 className="header">File transfer bitches😎</h1>
+      <h1 className="header">Files and stuff</h1>
       <div className="mainContent">
         {/* <div className="files">
           <h1>Upload</h1>
           <form
-            action="/api/upload"
-            method="post"
-            encType="multipart/form-data"
+          action="/api/upload"
+          method="post"
+          encType="multipart/form-data"
           >
-            <input type="file" name="file" />
-            <button type="submit">Upload</button>
+          <input type="file" name="file" />
+          <button type="submit">Upload</button>
           </form>
-        </div> */}
+          </div> */}
         <div className="files">
-          {/* <h1>Download</h1> */}
-          <button onClick={download} className="downloadButton">
-            Omg Marie have you seen how sexy this button is 😩
-          </button>
+          <div className="file">
+            <p className="downloadText">flstudio.zip</p>
+            <form action="/api/download/flstudio.zip" method="get">
+              <button
+                onClick={download}
+                className="downloadButton"
+                type="submit"
+              >
+                bro look at this fancy button I made 🥰
+              </button>
+            </form>
+          </div>
+          <div className="file">
+            <p className="downloadText">Superforce.wav</p>
+            <form action="/api/download/Superforce.wav" method="get">
+              <button
+                onClick={download}
+                className="downloadButton"
+                type="submit"
+              >
+                Download Superforce.wav ✨
+              </button>
+            </form>
+          </div>
+          <div className="file">
+            <p className="downloadText">CLUB_DES_PETIES_1.0</p>
+            <form action="/api/download/CLUB_DES_PETIES_1.0.wav" method="get">
+              <button
+                onClick={download}
+                className="downloadButton"
+                type="submit"
+              >
+                Download CLUB_DES_PETIES_1.0.wav 🎶
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </motion.div>

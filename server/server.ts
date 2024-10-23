@@ -64,9 +64,16 @@ app.post('/api/upload', (req, res) => {
     });
 });
 
-app.get('/api/download', (req, res) => {
-    console.log('download request received');
-    const fileName = 'flstudio.zip';
+app.get('/api/download/*', (req, res) => {
+    // file requested is the last part of the URL
+    console.log(req.url);
+    const fileName = req.url.split('/').pop()?.endsWith('?') ? req.url.split('/').pop()?.slice(0, -1) : req.url.split('/').pop();
+
+    if (!fileName) {
+        return res.status(400).send('No file requested');
+    }
+
+    console.log(`Download request from ${req.ip}`);
     const filePath = path.join(__dirname, 'uploads', fileName);
 
     res.download(filePath, fileName, (err) => {

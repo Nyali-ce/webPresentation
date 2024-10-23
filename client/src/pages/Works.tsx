@@ -1,3 +1,5 @@
+import './works.scss';
+
 import { useState } from "react";
 import { Work, WorksIndicator } from "../components/works";
 import { motion } from "framer-motion";
@@ -5,19 +7,20 @@ import { motion } from "framer-motion";
 function Works() {
   const [currentWorkIndex, setCurrentWorkIndex] = useState(0);
   const works = [
+    // {
+    //   title: "dsc_selfbot.ce",
+    //   date: "2019/06/03",
+    //   url: "https://github.com/Nyali-ce/dsc_selfbot",
+    //   image: "img/png/dsc_selfbot.png",
+    // },
     {
       title: "Github Profile",
       date: "2019/06/03",
       url: "https://github.com/Nyali-ce",
       image: "img/png/pfp.png",
     },
-    {
-      title: "Jellyfin Server (Private)",
-      date: "2023/12/16",
-      url: "http://100.117.184.112:8096",
-      image: "img/png/jellyfin.png",
-    },
     // Add more works to the array as needed
+
   ];
 
   const handleNextWork = () => {
@@ -37,7 +40,10 @@ function Works() {
       exit={{ opacity: 0 }}
     >
       <h1 className="header">My stuff</h1>
-      <div className="mainContent">
+      {/* <div className="mainContent">
+        <div id="id">
+
+        </div>
         <Work
           title={works[currentWorkIndex].title}
           date={works[currentWorkIndex].date}
@@ -50,7 +56,26 @@ function Works() {
         onPrev={handlePrevWork}
         total={works.length}
         current={currentWorkIndex}
-      />
+      /> */}
+      <div className="mainContent">
+      <p
+          className="aboutDescription"
+          data-canvas-opacity={
+            (document.getElementById("background") as HTMLCanvasElement)?.style
+              ?.opacity == "1"
+              ? "1"
+              : "0"
+          }
+        >
+          🤓☝️ Umm Actually I'd get sued by my clients if I show source code on here but a few things on my github are public
+        </p>
+        <Work
+          title={works[currentWorkIndex].title}
+          date={works[currentWorkIndex].date}
+          url={works[currentWorkIndex].url}
+          image={works[currentWorkIndex].image}
+        />
+      </div>
     </motion.div>
   );
 }
